@@ -5,19 +5,36 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>All weatherApp</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
     </head>
     <body>
-        <form method='POST'>
+        <div class="container">
+            <h1>All WeatherApp</h1>
+        </div>
+        <form method="POST">
             {% csrf_token %}
-            <input type="text" placeholder="Enter city">
-            <button type="submit">Search</button>
+            <input type="text" name="city" placeholder="Enter City">
+            <button type="submit">search</button>
         </form>
-        <h2>{{ temp }}</h2>
-        <h3>{{ city }}</h3>
-        <p>{{ description }}</p>
-        <p>
-            <img src ="http://openweathermap.org/img/w/{{ icon }}.png" width="100px"> 
-        </p>
-        <p>{{ day }}</p>
+        <div class="weather">
+            <div class="left">
+                <h2>{{ temp }}&#176;c</h2>
+                <h3>{{ city }}</h3>
+
+            </div>
+            <div class="right">
+                <div class="icon">
+                    <p><img src="http://openweathermap.org/img/w/{{ icon }}.png" widith="100px"></p>
+
+                </div>
+                <div class="condition">
+                    <p>{{ description }}</p>
+                    <p>{{ day }}</p>
+                </div>
+
+            </div>
+
+        </div>
+
     </body>
-    </html>
+    </html> <link rel="stylesheet" href="{% static 'style.css' %}">
