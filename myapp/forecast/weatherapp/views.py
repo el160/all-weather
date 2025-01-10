@@ -1,26 +1,33 @@
 from django.shortcuts import render
-
-import datetime
+import requests #  library used to make HTTP requests
+import datetime #  helps us work with dates
 
 # Create your views here.
 
 
 def home (request):
+    # If the user has sent a city in the form, use that city. Otherwise, default to 'Mombasa'.
     if 'city' in request.POST:
         city = request.POST['city']
     else:
         city = 'Mombasa'
-    url = f'https://api.openweathermap.org/data/2.5/weather?q={'Mombasa'}&appid=2933b7b19ca8a87bdb67e21a091ffd5b' 
+        # Replace 'Mombasa' with the dynamic city value in the URL
+    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid=2933b7b19ca8a87bdb67e21a091ffd5b' 
+    
+    #additional parameters we send to the API, e.g., units in Celsius
     PARAMS = {'units':'metric'}
+    ## Use the 'requests' library to fetch data from the OpenWeather API
+    data = requests.get(url,PARAMS).json() #method to make HTTP requests
     
-    data = request.get(url,PARAMS).json() 
+    #Extract necessary information from the JSON response
+    description = data['weather'][0]['description'] # Weather description (e.g., clear sky)
+    icon = data['weather'][0]['icon']# Weather icon code
+    temp = data['main']['temp'] # Current temperature in Celsius
     
-    description = data['weather'][0]['description'] 
-    icon = data['weather'][0]['icon'] 
-    temp = data['main']['temp']
-    
+    #get today's date
     day = datetime.date.today()
     
-    
-    return render(request,'weatherapp/home.html',{'desription':description,'icon':temp,'day':day})
+    #render the template with data
+    return render(request,'weatherapp/home.html',{
+        'description':description,'icon':icon ,'temp':temp,'day':day,'city':city})
     
