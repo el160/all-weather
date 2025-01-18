@@ -10,7 +10,7 @@
     <body>
         <div class="container">
             <h1>All WeatherApp</h1>
-        </div>
+       
         <form method="POST">
             {% csrf_token %}
             <input type="text" name="city" placeholder="Enter City">
@@ -35,6 +35,15 @@
             </div>
 
         </div>
-
+    </div>
+{% comment %} to handle error exception {% endcomment %}
+    {% if exception_occured %}
+    <script>
+        window.onload = function() {
+            alert("error fetching weather data for '{{ city }}'.showing data for "Mombasa" instead")
+        }
+    </script>
+    {% endif %}
+{% comment %} API for city image and search engine (from google APi) {% endcomment %}
     </body>
-    </html> <link rel="stylesheet" href="{% static 'style.css' %}">
+    </html> 
